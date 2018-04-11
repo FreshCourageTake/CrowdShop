@@ -14,10 +14,6 @@ import styles from './styles';
 
 export default class ShoppingLists extends Component<{}> {
 
-    static navigationOptions = {
-        title: 'My Shopping Lists'
-    };
-
     _renderRow = (rowData, sectionId) => {
         return (
             <TouchableHighlight>
@@ -31,16 +27,16 @@ export default class ShoppingLists extends Component<{}> {
                         </View>
                     }
                     underlayColor='#dddddd'
-                    onPress={() => this._showListItems(sectionId, rowData.id)}
+                    onPress={() => this._showListItems(sectionId, rowData.listName)}
                 />
             </TouchableHighlight>
         );
     };
 
     _showListItems = (sectionId, title) => {
-        // this.props.navigation.navigate(
-        //     'ListItems', {id: sectionId, name: title}
-        // );
+        this.props.navigation.navigate(
+            'ListItems', {id: sectionId, title: title}
+        );
     };
 
     render() {
