@@ -12,7 +12,7 @@ export function lists(state = [], action) {
                 {
                     id: uniqueId,
                     listName: action.listName,
-                    storeName: action.storeName,
+                    storeId: action.storeId,
                     estTotal: action.estTotal
                 }
             ];

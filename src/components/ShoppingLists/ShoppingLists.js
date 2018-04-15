@@ -22,7 +22,7 @@ export default class ShoppingLists extends Component<{}> {
                     title={rowData.listName}
                     subtitle={
                         <View style={styles.subtitle}>
-                            <Text style={styles.storeName}>{rowData.storeName}</Text>
+                            <Text style={styles.storeId}>{rowData.storeId}</Text>
                             <Text>Estimated Total: ${rowData.estTotal}</Text>
                         </View>
                     }

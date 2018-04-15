@@ -46,11 +46,11 @@ class HomePage extends Component {
     }
 }
 
-function mapStateToProps(state) {
+const mapStateToProps = (state) => {
     return {
         lists: state.lists
     }
-}
+};
 
 const mapDispatchToProps = (dispatch) => {
     return bindActionCreators(ActionCreators, dispatch);

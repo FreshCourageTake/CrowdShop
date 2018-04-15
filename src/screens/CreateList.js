@@ -1,6 +1,9 @@
 import React, { Component } from 'react'
+import { connect } from 'react-redux'
+import { bindActionCreators } from 'redux'
 import t from 'tcomb-form-native'
 const Form = t.form.Form;
+
 import {
     View
 } from 'react-native'
@@ -8,12 +11,7 @@ import {
     Button
 } from 'react-native-elements'
 
-const Store = t.enums({
-    walmart: 'Walmart',
-    target: 'Target',
-    dollargeneral: 'Dollar General',
-    smiths: 'Smiths'
-});
+import {ActionCreators} from "../actions/index";
 
 const options = {
     fields: {
@@ -26,12 +24,38 @@ const options = {
     }
 };
 
-const List = t.struct({
+let Store = t.enums({});
+
+let List = t.struct({
     listName: t.String,
     storeName: Store
 });
 
-export default class CreateList extends Component {
+class CreateList extends Component {
+
+    constructor(props) {
+        super(props);
+
+        this.state = {
+            stores: t.enums({}),
+        };
+    }
+
+    componentDidMount() {
+        this.props.fetchStores()
+            .then(() => {
+                if (this.props.stores && this.props.stores.data) {
+                    let newOptions = this.props.stores.data.reduce((opts, store) => {
+                        opts[store._id] = store.name;
+                        return opts;
+                    }, {});
+
+                    this.setState({
+                        stores: t.enums(newOptions)
+                    });
+                }
+            })
+    }
 
     handlePressSubmit() {
         let formData = this.refs.newListForm.getValue();
@@ -45,11 +69,20 @@ export default class CreateList extends Component {
         this.props.navigation.goBack(null);
     }
 
+    getForm() {
+        return (
+            t.struct({
+                listName: t.String,
+                storeName: this.state.stores
+            })
+        )
+    }
+
     render() {
         return (
             <View>
                 <Form
-                    type={List}
+                    type={this.getForm()}
                     ref='newListForm'
                     options={options}
                 />
@@ -69,3 +102,15 @@ export default class CreateList extends Component {
         )
     }
 }
+
+const mapStateToProps = state => {
+    return {
+        stores: state.stores
+    }
+};
+
+const mapDispatchToProps = dispatch => {
+    return bindActionCreators(ActionCreators, dispatch);
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(CreateList);
