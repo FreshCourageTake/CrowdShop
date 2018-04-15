@@ -32,7 +32,7 @@ export function stores(state = initialState, action) {
                 isFetching: false,
                 data: action.payload,
                 hasError: true,
-                errorMessage: action.err
+                errorMessage: action.error
             });
         default:
             return state;

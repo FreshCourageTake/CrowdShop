@@ -1,21 +1,50 @@
 import shortid from 'shortid'
 import {
-    CREATE_SHOPPING_LIST
+    CREATING_SHOPPING_LIST,
+    CREATING_SHOPPING_LIST_SUCCESS,
+    CREATING_SHOPPING_LIST_FAILURE
 } from "../actions/ActionTypes";
 
-export function lists(state = [], action) {
+const initialState = {
+    isFetching: null,
+    data: [],
+    hasError: false,
+    errorMessage: null
+};
+
+export function lists(state = initialState, action) {
     switch (action.type) {
-        case CREATE_SHOPPING_LIST:
+        case CREATING_SHOPPING_LIST:
             const uniqueId = shortid.generate();
-            return [
-                ...state,
-                {
-                    id: uniqueId,
-                    listName: action.listName,
-                    storeId: action.storeId,
-                    estTotal: action.estTotal
-                }
-            ];
+            return {
+                isFetching: true,
+                data: [...state.data],
+                hasError: false,
+                errorMessage: null
+            };
+        case CREATING_SHOPPING_LIST_SUCCESS:
+            return {
+                isFetching: false,
+                data: [
+                    ...state.data,
+                    {
+                        id: uniqueId,
+                        listName: action.listName,
+                        storeId: action.storeId,
+                        storeName: action.storeName,
+                        estTotal: action.estTotal
+                    }
+                ],
+                hasError: false,
+                errorMessage: null
+            };
+        case CREATING_SHOPPING_LIST_FAILURE:
+            return {
+                isFetching: false,
+                data: [...state.data],
+                hasError: true,
+                errorMessage: action.error
+            };
         default:
             return state;
     }

@@ -18,7 +18,7 @@ const options = {
         listName: {
             label: 'Shopping List Name'
         },
-        storeName: {
+        store: {
             label: 'Where will you be shopping?'
         }
     }
@@ -28,7 +28,7 @@ let Store = t.enums({});
 
 let List = t.struct({
     listName: t.String,
-    storeName: Store
+    store: Store
 });
 
 class CreateList extends Component {
@@ -60,7 +60,7 @@ class CreateList extends Component {
     handlePressSubmit() {
         let formData = this.refs.newListForm.getValue();
         if (formData) {
-            this.props.navigation.state.params.createList(formData.listName, formData.storeName);
+            this.props.navigation.state.params.createList(formData.listName, formData.store);
             this.props.navigation.goBack(null);
         }
     }
@@ -73,7 +73,7 @@ class CreateList extends Component {
         return (
             t.struct({
                 listName: t.String,
-                storeName: this.state.stores
+                store: this.state.stores
             })
         )
     }

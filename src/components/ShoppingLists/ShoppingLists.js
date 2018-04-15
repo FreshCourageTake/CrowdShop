@@ -22,7 +22,7 @@ export default class ShoppingLists extends Component<{}> {
                     title={rowData.listName}
                     subtitle={
                         <View style={styles.subtitle}>
-                            <Text style={styles.storeId}>{rowData.storeId}</Text>
+                            <Text style={styles.storeName}>{rowData.storeName}</Text>
                             <Text>Estimated Total: ${rowData.estTotal}</Text>
                         </View>
                     }
@@ -52,17 +52,16 @@ export default class ShoppingLists extends Component<{}> {
                 <List>
                     <ListView
                         renderRow={this._renderRow}
-                        dataSource={ds.cloneWithRows(this.props.lists)}
+                        dataSource={ds.cloneWithRows(this.props.lists.data)}
                     />
                 </List>
             </View>
-
         );
 
 
         return (
             <View>
-                {this.props.lists.length > 0 ? populatedList : emptyList}
+                {this.props.lists.data.length > 0 ? populatedList : emptyList}
             </View>
         );
     }

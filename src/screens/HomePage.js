@@ -21,7 +21,7 @@ class HomePage extends Component {
     }
 
     handlePressCreateList() {
-        this.props.navigation.navigate('CreateList', { createList: (listName, storeName) => this.props.createShoppingList(listName, storeName) });
+        this.props.navigation.navigate('CreateList', { createList: (listName, storeId) => this.props.createShoppingList(listName, storeId) });
     }
 
     render() {

@@ -13,7 +13,7 @@ export function fetchStores() {
                 dispatch({ type: FETCHING_STORES_SUCCESS, payload: res.data });
             })
             .catch(err => {
-                dispatch({ type: FETCHING_STORES_FAILURE, payload: err.data });
+                dispatch({ type: FETCHING_STORES_FAILURE, error: err.data });
             });
     }
 }
